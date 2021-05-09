@@ -3,21 +3,31 @@ import ReactDOM from './react-dom';
 
 const ele = (
   <div className='active' title='123'>
-    hello,<span>react</span>
+    hello,<span>react JSX</span>
   </div>
 )
+console.warn('JSX',ele);
 
-console.warn('ele',ele);
-
-function Home(){
+function FunctionHome(){
   return (
     <div className='active' title='123'>
-      hello,<span>react</span>
+      hello,<span>react 函数组件Home</span>
     </div>
   )
 }
+console.warn('函数组件Home',<FunctionHome />);
 
-console.warn('Home',<Home title='111'/>);
+class ClassHome extends React.Component{
+  render(){
+    return (
+      <div className='active' title='123'>
+        hello,<span>react 类组件Home</span>
+      </div>
+    )
+  }
+}
+console.warn('类组件Home',<ClassHome/>);
 
-// ReactDOM.render(ele,document.getElementById('root'))
-ReactDOM.render(<Home title='111'/>,document.getElementById('root'))
+ReactDOM.render(ele,document.getElementById('root'))
+ReactDOM.render(<FunctionHome title='111'/>,document.getElementById('root'))
+ReactDOM.render(<ClassHome title='111'/>,document.getElementById('root'))

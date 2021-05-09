@@ -5,14 +5,14 @@ const ReactDOM = {
 }
 
 function render(vnode,container){
-  console.log('render',vnode);
+  // console.log('render',vnode);
   return container.appendChild(_render(vnode));
 }
 
 function createComponent(comp,props){
-  console.log('createComponent-comp',comp);
-  console.log('createComponent-comp()',comp());
-  console.log('createComponent-props',props);
+  // console.log('createComponent-comp',comp);
+  // console.log('createComponent-comp()',comp());
+  // console.log('createComponent-props',props);
   let inst;
   if(comp.prototype && comp.prototype.render){
     //如果是类组件 则创建实例
@@ -31,17 +31,17 @@ function createComponent(comp,props){
 
 function renderComponent(comp){
   let base;
-  console.log('renderComponent-comp',comp);
-  console.log('renderComponent-comp.render',comp.render);
+  // console.log('renderComponent-comp',comp);
+  // console.log('renderComponent-comp.render',comp.render);
   const renderer = comp.render();
-  console.log('renderComponent-renderer',renderer);
-  base = _render(renderer)
-  console.log('renderComponent-base',base);
+  // console.log('renderComponent-renderer',renderer);
+  base = _render(renderer);
+  // console.log('renderComponent-base',base);
   comp.base = base;
 }
 
 function setComponentProps(comp,props){
-  console.log('setComponentProps-props',props);
+  // console.log('setComponentProps-props',props);
   //设置组件属性
   comp.props = props;
   //渲染组件
@@ -59,7 +59,7 @@ function _render(vnode){
     console.warn('函数组件');
     //1、创建组建
     const comp = createComponent(tag,attrs);
-    console.warn('createComponent-after',comp);
+    // console.warn('createComponent-after',comp);
     //2、设置组件的属性
     setComponentProps(comp,attrs);
     //3、组件渲染的节点对象返回
