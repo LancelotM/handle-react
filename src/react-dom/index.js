@@ -1,7 +1,8 @@
 import Component from '../react/component';
 
 const ReactDOM = {
-  render
+  render,
+  renderComponent
 }
 
 function render(vnode,container){
@@ -29,29 +30,49 @@ function createComponent(comp,props){
   return inst;
 }
 
-function renderComponent(comp){
-  let base;
-  // console.log('renderComponent-comp',comp);
-  // console.log('renderComponent-comp.render',comp.render);
-  const renderer = comp.render();
-  // console.log('renderComponent-renderer',renderer);
-  base = _render(renderer);
-  // console.log('renderComponent-base',base);
-  comp.base = base;
-}
-
 function setComponentProps(comp,props){
   // console.log('setComponentProps-props',props);
+  if(!comp.base){
+    if(comp.componentWillMount) comp.componentWillMount();
+  }else if(comp.componentWillReceiveProps){
+    comp.componentWillReceiveProps(props);
+  }
   //设置组件属性
   comp.props = props;
   //渲染组件
   renderComponent(comp);
 }
 
+function renderComponent(comp){
+  let base;
+  // console.log('renderComponent-comp',comp);
+  // console.log('renderComponent-comp.render',comp.render);
+  if(comp.base){
+    if(comp.shouldComponentUpdate && comp.shouldComponentUpdate() === false) return;
+    if(comp.componentWillUpdate) comp.componentWillUpdate();
+  }
+  const renderer = comp.render();
+  // console.log('renderComponent-renderer',renderer);
+  base = _render(renderer);
+  if(comp.base){
+    if(comp.componentDidUpdate) comp.componentDidUpdate();
+  }else if(comp.componentDidMount){
+    comp.componentDidMount();
+  }
+  //节点替换
+  if(comp.base && comp.base.parentNode){
+    // console.error(comp.base);
+    // console.error(comp.base.parentNode);
+    comp.base.parentNode.replaceChild(base,comp.base);
+  }
+  // console.log('renderComponent-base',base);
+  comp.base = base;
+}
+
 function _render(vnode){
   if(vnode === undefined) return;
-  //字符串直接输出字符串到节点中
-  if(typeof vnode === 'string'){
+  //字符串直接输出字符串||数字到节点中
+  if(typeof vnode === 'string' || typeof vnode === 'number'){
     return document.createTextNode(vnode);
   }
   const {tag,attrs,childrens} = vnode;
@@ -74,9 +95,7 @@ function _render(vnode){
     })
   }
   //处理子节点
-  if(childrens.length > 0){
-    childrens.forEach(child=>render(child,dom))
-  }
+  childrens.forEach(child=>render(child,dom))
   return dom;
 }
 
