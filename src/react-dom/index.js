@@ -1,13 +1,14 @@
 import Component from '../react/component';
+import {diff} from './diff';
 
 const ReactDOM = {
-  render,
-  renderComponent
+  render
 }
 
-function render(vnode,container){
+function render(vnode,container,dom){
   // console.log('render',vnode);
-  return container.appendChild(_render(vnode));
+  return diff(dom,vnode,container);
+  // return container.appendChild(_render(vnode));
 }
 
 function createComponent(comp,props){
@@ -43,7 +44,7 @@ function setComponentProps(comp,props){
   renderComponent(comp);
 }
 
-function renderComponent(comp){
+export function renderComponent(comp){
   let base;
   // console.log('renderComponent-comp',comp);
   // console.log('renderComponent-comp.render',comp.render);
@@ -61,9 +62,10 @@ function renderComponent(comp){
   }
   //节点替换
   if(comp.base && comp.base.parentNode){
-    // console.error(comp.base);
+    console.error('base',base);
+    console.error('comp.base',comp.base);
     // console.error(comp.base.parentNode);
-    comp.base.parentNode.replaceChild(base,comp.base);
+    // comp.base.parentNode.replaceChild(base,comp.base);
   }
   // console.log('renderComponent-base',base);
   comp.base = base;
@@ -71,8 +73,9 @@ function renderComponent(comp){
 
 function _render(vnode){
   if(vnode === undefined) return;
+  if(typeof vnode === 'number') vnode=String(vnode);
   //字符串直接输出字符串||数字到节点中
-  if(typeof vnode === 'string' || typeof vnode === 'number'){
+  if(typeof vnode === 'string'){
     return document.createTextNode(vnode);
   }
   const {tag,attrs,childrens} = vnode;
@@ -99,7 +102,7 @@ function _render(vnode){
   return dom;
 }
 
-function setAttribute(dom,key,val){
+export function setAttribute(dom,key,val){
   //将React属性名转换成js属性名 (className->class)
   if(key === 'className'){
     key = 'class'

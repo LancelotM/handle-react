@@ -62,6 +62,6 @@ class ClassHome extends React.Component{
 }
 console.warn('类组件Home',<ClassHome/>);
 
-// ReactDOM.render(ele,document.getElementById('root'))
+ReactDOM.render(ele,document.getElementById('root'))
 // ReactDOM.render(<FunctionHome name='active'/>,document.getElementById('root'))
-ReactDOM.render(<ClassHome name='active'/>,document.getElementById('root'))
+// ReactDOM.render(<ClassHome name='active'/>,document.getElementById('root'))
