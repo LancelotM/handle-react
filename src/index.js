@@ -29,6 +29,18 @@ class ClassHome extends React.Component{
   }
   componentDidMount(){
     console.warn('组件挂载之后');
+    for (let i = 0; i < 10; i++) {
+      // this.setState({
+      //   num:this.state.num+1
+      // })
+      // console.warn(this.state.num);
+      this.setState((prevState,prevProps)=>{
+        console.warn(this.state.num);
+        return {
+          num:prevState.num+1
+        }
+      })
+    }
   }
   componentWillReceiveProps(props){
     console.warn('父组件发生render的时候子组件调用该函数',props);

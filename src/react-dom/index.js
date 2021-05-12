@@ -63,8 +63,8 @@ export function renderComponent(comp){
   }
   // //节点替换
   // if(comp.base && comp.base.parentNode){
-  //   console.error('base',base);
-  //   console.error('comp.base',comp.base);
+  //   // console.error('base',base);
+  //   // console.error('comp.base',comp.base);
   //   // console.error(comp.base.parentNode);
   //   comp.base.parentNode.replaceChild(base,comp.base);
   // }

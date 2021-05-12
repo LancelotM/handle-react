@@ -9,6 +9,12 @@ export function diff(dom,vnode,container){
   return ret;
 }
 
+/**
+ * 
+ * @param {*} dom 真实DOM
+ * @param {*} vnode 虚拟DOM
+ * @returns 
+ */
 export function diffNode(dom,vnode){
   // console.warn('dom',dom);
   // console.warn('vnode',vnode);
