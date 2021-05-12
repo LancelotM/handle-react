@@ -1,5 +1,5 @@
 import Component from '../react/component';
-import {diff} from './diff';
+import {diff,diffNode} from './diff';
 
 const ReactDOM = {
   render
@@ -11,7 +11,7 @@ function render(vnode,container,dom){
   // return container.appendChild(_render(vnode));
 }
 
-function createComponent(comp,props){
+export function createComponent(comp,props){
   // console.log('createComponent-comp',comp);
   // console.log('createComponent-comp()',comp());
   // console.log('createComponent-props',props);
@@ -31,7 +31,7 @@ function createComponent(comp,props){
   return inst;
 }
 
-function setComponentProps(comp,props){
+export function setComponentProps(comp,props){
   // console.log('setComponentProps-props',props);
   if(!comp.base){
     if(comp.componentWillMount) comp.componentWillMount();
@@ -54,19 +54,20 @@ export function renderComponent(comp){
   }
   const renderer = comp.render();
   // console.log('renderComponent-renderer',renderer);
-  base = _render(renderer);
+  // base = _render(renderer);
+  base = diffNode(comp.base,renderer)
   if(comp.base){
     if(comp.componentDidUpdate) comp.componentDidUpdate();
   }else if(comp.componentDidMount){
     comp.componentDidMount();
   }
-  //节点替换
-  if(comp.base && comp.base.parentNode){
-    console.error('base',base);
-    console.error('comp.base',comp.base);
-    // console.error(comp.base.parentNode);
-    // comp.base.parentNode.replaceChild(base,comp.base);
-  }
+  // //节点替换
+  // if(comp.base && comp.base.parentNode){
+  //   console.error('base',base);
+  //   console.error('comp.base',comp.base);
+  //   // console.error(comp.base.parentNode);
+  //   comp.base.parentNode.replaceChild(base,comp.base);
+  // }
   // console.log('renderComponent-base',base);
   comp.base = base;
 }

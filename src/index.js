@@ -55,13 +55,13 @@ class ClassHome extends React.Component{
           this.setState({
             num:this.state.num+1
           })
-        }}>点我</button>
+        }}>add num</button>
       </div>
     )
   }
 }
 console.warn('类组件Home',<ClassHome/>);
 
-ReactDOM.render(ele,document.getElementById('root'))
+// ReactDOM.render(ele,document.getElementById('root'))
 // ReactDOM.render(<FunctionHome name='active'/>,document.getElementById('root'))
-// ReactDOM.render(<ClassHome name='active'/>,document.getElementById('root'))
+ReactDOM.render(<ClassHome name='active'/>,document.getElementById('root'))
